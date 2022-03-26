@@ -1,35 +1,25 @@
-package com.fvink.mobilebanking.features.accounts
+package com.fvink.mobilebanking.ui.accounts
 
-import android.graphics.DashPathEffect
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
-import android.util.Log
-import androidx.annotation.ColorInt
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.SnackbarDefaults.backgroundColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.NativeCanvas
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.text.Paragraph
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastForEachIndexed
+import com.fvink.mobilebanking.ui.common.ComposablePreviewData
 import kotlin.math.ceil
 
 
@@ -40,19 +30,21 @@ fun AccountBalanceChartView(
 ) {
     val labels = calculateYAxisValues(balanceHistory.balanceList)
 
-    val backgroundColor = Color(0xFF1C1E21)
-    val graphLineColor = Color(0xFF34BFFF)
-    val transparentColor = Color(0x00000000)
+    val backgroundColor = MaterialTheme.colors.surface
+    val graphLineColor = Color(0xFF4D9FFF)
+    val labelColor = android.graphics.Color.parseColor("#FF797979")
+    val indicatorLineColor = Color(0xFF797979)
 
     val gradientColors = listOf(
-        Color(0xFF34BFFF),
-        Color(0x5E34BFFF),
-        Color(0x2C34BFFF),
+        Color(0xFF4D9FFF),
+        Color(0x484D9FFF),
+        Color(0x234D9FFF),
         Color(0x00000000)
     )
 
     Canvas(
         modifier = modifier
+            .height(150.dp)
             .background(backgroundColor)
     ) {
         val height = size.height
@@ -64,10 +56,9 @@ fun AccountBalanceChartView(
 
         val graphBounds = Rect(0, graphTop.toInt(), width.toInt(), graphBottom.toInt())
 
-        val indicatorLineColor = Color(0xFF797979)
         val textPaint = Paint().apply {
             textSize = 30f
-            color = android.graphics.Color.parseColor("#797979")
+            color = labelColor
             textAlign = Paint.Align.CENTER
         }
         val textBounds = Rect()
@@ -114,9 +105,10 @@ fun AccountBalanceChartView(
 
         val lastPoint = points.last()
         linePath.lineTo(lastPoint.first, lastPoint.second)
-        linePath.lineTo(graphBounds.right.toFloat(), graphBounds.bottom.toFloat())
-        linePath.lineTo(graphBounds.left.toFloat(), graphBounds.bottom.toFloat())
+        linePath.lineTo(graphBounds.right.toFloat(), height)
+        linePath.lineTo(graphBounds.left.toFloat(), height)
 
+        // draw the gradient below the chart line
         drawPath(
             path = linePath,
             brush = Brush.verticalGradient(
@@ -124,6 +116,7 @@ fun AccountBalanceChartView(
             )
         )
 
+        // draw the chart line
         for (index in 0 until points.lastIndex) {
             val point1 = points[index]
             val point2 = points[index + 1]
@@ -180,17 +173,11 @@ private fun getGraphCoordsForValue(
     xIndicesCount: Int,
     graphBounds: Rect
 ): Pair<Float, Float> {
-    // val percentageOnXAxis = if (indexOnXAxis == 0) 0.0 else (value * 100) / (maxValue)
     val percentageOnXAxis = if (indexOnXAxis == 0) 0 else ((indexOnXAxis) * 100) / (xIndicesCount - 1)
     val percentageOnYAxis = ((value - minValue) * 100) / (maxValue - minValue)
 
-    Log.d("AAA", "percentageOnXAxis: $percentageOnXAxis")
-    Log.d("AAA", "percentageOnYAxis: $percentageOnYAxis")
-
     val x = (percentageOnXAxis * (graphBounds.right - graphBounds.left) / 100) + graphBounds.left
     val y = (percentageOnYAxis * (graphBounds.top - graphBounds.bottom) / 100) + graphBounds.bottom
-
-    Log.d("AAA", "x: $x, y: $y")
 
     return Pair(x.toFloat(), y.toFloat())
 }
@@ -203,20 +190,43 @@ private fun calculateYAxisValues(values: List<Double>): YAxisLabels {
     return YAxisLabels(minValue, midValue, maxValue)
 }
 
+/**
+ * Round the value down to the nearest 0/100/1000
+ * Example:
+ *   23 -> 0
+ *   755 -> 100
+ *   3523 -> 3000
+ *   78_534 -> 78_000
+ *   628_334 -> 628_000
+ *   1_253_243 -> 1_000_000
+ */
 private fun roundDown(value: Double): Int {
     return when {
         value <= 100 -> 0
         value <= 1000 -> value.toInt() / 100 * 100
-        else -> value.toInt() / 1000 * 1000
+        value <= 1_000_000 -> value.toInt() / 1000 * 1000
+        else -> value.toInt() / 500000 * 500000
     }
 }
 
+/**
+ * Round the value up to the nearest 0/100/1000
+ * Example:
+ *   23 -> 100
+ *   755 -> 800
+ *   3523 -> 3600
+ *   78_534 -> 80_000
+ *   628_334 -> 700_000
+ *   1_253_243 -> 1_500_000
+ */
 private fun roundUp(value: Double): Int {
     return when {
         value <= 10 -> 10
         value <= 100 -> 100
-        value <= 10000 -> (ceil(value / 100f) * 100).toInt()
-        else -> (ceil(value / 1000f) * 1000).toInt()
+        value <= 10_000 -> (ceil(value / 100f) * 100).toInt()
+        value <= 100_000 -> (ceil(value / 10_000f) * 10_000).toInt()
+        value <= 1_000_000 -> (ceil(value / 100_000f) * 100_000).toInt()
+        else -> (ceil(value / 500_000f) * 500_000).toInt()
     }
 }
 
@@ -225,26 +235,8 @@ private fun roundUp(value: Double): Int {
 fun AccountBalanceChartPreview() {
     AccountBalanceChartView(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
-        balanceHistory = AccountBalanceHistory(
-            balanceList = listOf(
-                0.0,
-                100.0,
-                450.0,
-                600.0,
-                550.0,
-                500.0,
-                700.0,
-                800.0,
-                400.0,
-                500.0,
-                600.0,
-                700.0,
-                1000.0,
-                800.0
-            )
-        )
+            .fillMaxWidth(),
+        balanceHistory = ComposablePreviewData.accountBalanceHistory
     )
 }
 
