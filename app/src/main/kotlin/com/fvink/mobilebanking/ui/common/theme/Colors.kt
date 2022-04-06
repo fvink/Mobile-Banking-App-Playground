@@ -1,36 +1,62 @@
 package com.fvink.mobilebanking.ui.common.theme
 
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-private val Secondary = Color(0xFF6384FF)
-private val ErrorRed = Color(0xFFFF2920)
+object ColorPalette {
+    val Secondary = Color(0xFF6384FF)
+    val ErrorRed = Color(0xFFFF2920)
 
-private val PrimaryLight = Color(0xFFFEFEFE)
-private val SurfaceLight = Color(0xFFFFFFFF)
-private val TextTitleLight = Color(0xFF293653)
-private val TextSubtitleLight = Color(0xFFA5AAC1)
+    val PrimaryLight = Color(0xFFFEFEFE)
+    val SurfaceLight = Color(0xFFFFFFFF)
+    val TextTitleLight = Color(0xFF293653)
+    val TextSubtitleLight = Color(0xFFA5AAC1)
+    val DividerLight = Color(0xFFF3F3F7)
+    val TransactionIconBackgroundLight = Color(0xFFEEEEF1)
 
-private val PrimaryDark = Color(0xFF1C1E21)
-private val SurfaceDark = Color(0xFF232429)
-private val TextTitleDark = Color(0xFFFFFFFF)
-private val TextSubtitleDark = Color(0xFF797979)
+    val PrimaryDark = Color(0xFF1C1E21)
+    val SurfaceDark = Color(0xFF232429)
+    val TextTitleDark = Color(0xFFFFFFFF)
+    val TextSubtitleDark = Color(0xFF797979)
+    val DividerDark = Color(0x0DF3F3F7)
+    val TransactionIconBackgroundDark = Color(0xFF313338)
+}
 
-val LightColors = lightColors(
-    primary = PrimaryLight,
-    onPrimary = TextTitleLight,
-    secondary = Secondary,
-    surface = SurfaceLight,
-    onSurface = TextTitleLight,
-    error = ErrorRed
+data class Colors(
+    val primary: Color,
+    val secondary: Color,
+    val surface: Color,
+    val textTitle: Color,
+    val textSubtitle: Color,
+    val textError: Color,
+    val divider: Color,
+    val transactionIconBackground: Color
 )
 
-val DarkColors = darkColors(
-    primary = PrimaryDark,
-    onPrimary = TextTitleDark,
-    secondary = Secondary,
-    surface = SurfaceDark,
-    onSurface = TextTitleDark,
-    error = ErrorRed
-)
+val lightColors = with(ColorPalette) {
+    Colors(
+        primary = PrimaryLight,
+        secondary = Secondary,
+        surface = SurfaceLight,
+        textTitle = TextTitleLight,
+        textSubtitle = TextSubtitleLight,
+        textError = ErrorRed,
+        divider = DividerLight,
+        transactionIconBackground = TransactionIconBackgroundLight
+    )
+}
+
+val darkColors = with(ColorPalette) {
+    Colors(
+        primary = PrimaryDark,
+        secondary = Secondary,
+        surface = SurfaceDark,
+        textTitle = TextTitleDark,
+        textSubtitle = TextSubtitleDark,
+        textError = ErrorRed,
+        divider = DividerDark,
+        transactionIconBackground = TransactionIconBackgroundDark
+    )
+}
+
+val MobileBankingColors = compositionLocalOf { lightColors }

@@ -68,8 +68,6 @@ dependencies {
     implementation(Deps.Compose.util)
     implementation(Deps.Compose.navigation)
     implementation(Deps.Compose.Accompanist.systemUiController)
-    implementation(Deps.Compose.Accompanist.insets)
-    implementation(Deps.Compose.Accompanist.insetsUi)
     implementation(Deps.Compose.Accompanist.navigationAnimation)
     implementation(Deps.Compose.Accompanist.swipeRefresh)
 }
@@ -91,7 +89,7 @@ object Versions {
     }
 
     object Compose {
-        const val compose = "1.1.0"
+        const val compose = "1.2.0-alpha05"
         const val activity = "1.3.0"
         const val accompanist = "0.23.0"
         const val navigation = "2.4.1"
@@ -123,8 +121,6 @@ object Deps {
 
         object Accompanist {
             const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.Compose.accompanist}"
-            const val insets = "com.google.accompanist:accompanist-insets:${Versions.Compose.accompanist}"
-            const val insetsUi = "com.google.accompanist:accompanist-insets-ui:${Versions.Compose.accompanist}"
             const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.accompanist}"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.accompanist}"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.accompanist}"
