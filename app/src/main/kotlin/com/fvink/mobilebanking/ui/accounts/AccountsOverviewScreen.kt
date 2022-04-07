@@ -1,8 +1,6 @@
 package com.fvink.mobilebanking.ui.accounts
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -55,10 +53,10 @@ fun AccountsOverviewView(state: AccountOverviewViewState) {
                     .asPaddingValues(),
             )
     ) {
-        AccountBalanceCardView(
-            modifier = Modifier
-                .padding(start = 20.dp, end = 20.dp),
-            state = ComposablePreviewData.accountBalanceCardViewState
+        AccountBalanceCardViewPager(
+            accountCardViewStates = state.accountCardViewStates,
+            selectedAccountIndex = 0, // TODO index
+            onPageSelected = {}
         )
 
         Spacer(modifier = Modifier.height(15.dp))

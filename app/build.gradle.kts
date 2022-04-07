@@ -50,6 +50,7 @@ dependencies {
     implementation(Deps.AndroidX.appcompat)
     implementation(Deps.AndroidX.coreKtx)
     implementation(Deps.androidMaterial)
+    implementation(Deps.timber)
     implementation(Deps.Coroutines.common)
     implementation(Deps.Coroutines.android)
     implementation(Deps.AndroidX.lifecycleRuntime)
@@ -70,6 +71,8 @@ dependencies {
     implementation(Deps.Compose.Accompanist.systemUiController)
     implementation(Deps.Compose.Accompanist.navigationAnimation)
     implementation(Deps.Compose.Accompanist.swipeRefresh)
+    implementation(Deps.Compose.Accompanist.pager)
+    implementation(Deps.Compose.Accompanist.pagerIndicators)
 }
 
 object Versions {
@@ -81,6 +84,7 @@ object Versions {
     const val androidMaterial = "1.3.0"
     const val koin = "3.1.4"
     const val landscapist = "1.4.8"
+    const val timber = "5.0.1"
 
     object AndroidX {
         const val appcompat = "1.3.1"
@@ -91,13 +95,14 @@ object Versions {
     object Compose {
         const val compose = "1.2.0-alpha05"
         const val activity = "1.3.0"
-        const val accompanist = "0.23.0"
+        const val accompanist = "0.24.6-alpha"
         const val navigation = "2.4.1"
     }
 }
 
 object Deps {
     const val androidMaterial = "com.google.android.material:material:${Versions.androidMaterial}"
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appcompat}"
@@ -124,6 +129,8 @@ object Deps {
             const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.accompanist}"
             const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.Compose.accompanist}"
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.accompanist}"
+            const val pager = "com.google.accompanist:accompanist-pager:${Versions.Compose.accompanist}"
+            const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:${Versions.Compose.accompanist}"
         }
     }
 

@@ -44,6 +44,13 @@ object ComposablePreviewData {
         )
     )
 
+    val accountBalanceCardViewStateList = (0..4).map {
+        AccountBalanceCardViewState(
+            balance = balance,
+            balanceHistory = accountBalanceHistory
+        )
+    }
+
     val accountBalanceCardViewState = AccountBalanceCardViewState(
         balance = balance,
         balanceHistory = accountBalanceHistory
@@ -61,7 +68,7 @@ object ComposablePreviewData {
     )
 
     val accountOverviewViewState = AccountOverviewViewState(
-        account = usdAccount,
+        accountCardViewStates = accountBalanceCardViewStateList,
         transactionHistory = transactionHistory
     )
 }

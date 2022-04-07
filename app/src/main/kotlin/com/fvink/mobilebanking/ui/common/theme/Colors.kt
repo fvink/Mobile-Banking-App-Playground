@@ -13,6 +13,8 @@ object ColorPalette {
     val TextSubtitleLight = Color(0xFFA5AAC1)
     val DividerLight = Color(0xFFF3F3F7)
     val TransactionIconBackgroundLight = Color(0xFFEEEEF1)
+    val PagerIndicatorSelectedLight = Color(0xFF595867)
+    val PagerIndicatorUnselectedLight = Color(0xFFC6C3CE)
 
     val PrimaryDark = Color(0xFF1C1E21)
     val SurfaceDark = Color(0xFF232429)
@@ -20,6 +22,8 @@ object ColorPalette {
     val TextSubtitleDark = Color(0xFF797979)
     val DividerDark = Color(0x0DF3F3F7)
     val TransactionIconBackgroundDark = Color(0xFF313338)
+    val PagerIndicatorSelectedDark = Color(0xFFAAAAB0)
+    val PagerIndicatorUnselectedDark = Color(0x26C6C3CE)
 }
 
 data class Colors(
@@ -30,7 +34,9 @@ data class Colors(
     val textSubtitle: Color,
     val textError: Color,
     val divider: Color,
-    val transactionIconBackground: Color
+    val transactionIconBackground: Color,
+    val pagerIndicatorSelected: Color,
+    val pagerIndicatorUnselected: Color,
 )
 
 val lightColors = with(ColorPalette) {
@@ -42,7 +48,9 @@ val lightColors = with(ColorPalette) {
         textSubtitle = TextSubtitleLight,
         textError = ErrorRed,
         divider = DividerLight,
-        transactionIconBackground = TransactionIconBackgroundLight
+        transactionIconBackground = TransactionIconBackgroundLight,
+        pagerIndicatorSelected = PagerIndicatorSelectedLight,
+        pagerIndicatorUnselected = PagerIndicatorUnselectedLight
     )
 }
 
@@ -55,7 +63,9 @@ val darkColors = with(ColorPalette) {
         textSubtitle = TextSubtitleDark,
         textError = ErrorRed,
         divider = DividerDark,
-        transactionIconBackground = TransactionIconBackgroundDark
+        transactionIconBackground = TransactionIconBackgroundDark,
+        pagerIndicatorSelected = PagerIndicatorSelectedDark,
+        pagerIndicatorUnselected = PagerIndicatorUnselectedDark
     )
 }
 

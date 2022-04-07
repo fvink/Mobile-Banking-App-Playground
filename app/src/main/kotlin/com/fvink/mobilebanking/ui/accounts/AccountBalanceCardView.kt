@@ -26,7 +26,7 @@ fun AccountBalanceCardView(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth(),
+            ,
         shape = RoundedCornerShape(5.dp),
         elevation = 10.dp
     ) {
