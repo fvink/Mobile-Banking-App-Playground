@@ -5,8 +5,8 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import com.fvink.mobilebanking.ui.accounts.AccountsOverviewScreen
 import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
+import com.fvink.mobilebanking.ui.home.HomeScreen
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 //            SideEffect {
 //                systemUiController.setStatusBarColor(Color.Transparent)
 //            }
-            MobileBankingTheme(darkTheme = true) {
-                AccountsOverviewScreen()
+            MobileBankingTheme(darkTheme = false) {
+                HomeScreen()
             }
         }
     }
