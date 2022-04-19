@@ -19,54 +19,92 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fvink.mobilebanking.R
 import com.fvink.mobilebanking.domain.CounterpartyType
 import com.fvink.mobilebanking.domain.Transaction
 import com.fvink.mobilebanking.domain.TransactionType
-import com.fvink.mobilebanking.domain.format
 import com.fvink.mobilebanking.domain.title
 import com.fvink.mobilebanking.ui.common.ComposablePreviewData
 import com.fvink.mobilebanking.ui.common.composables.TransactionIcon
+import com.fvink.mobilebanking.ui.common.moneyFormat
 import com.fvink.mobilebanking.ui.common.theme.ExtendedTheme
 import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
+import com.fvink.mobilebanking.ui.common.theme.simpleDateFormat
+import timber.log.Timber
 import java.time.LocalDate
 
 @Composable
-fun AccountsOverviewScreen() {
-    AccountsOverviewView(ComposablePreviewData.accountOverviewViewState)
+fun AccountsOverviewScreen(
+    modifier: Modifier = Modifier,
+    viewModel: AccountOverviewViewModel = viewModel()
+) {
+    val state by viewModel.state.collectAsState()
+    AccountsOverviewView(
+        modifier = modifier,
+        state = state,
+        onAccountSelected = { index -> viewModel.onAccountSelected(index) }
+    )
 }
 
 @Composable
-fun AccountsOverviewView(state: AccountOverviewViewState) {
+fun AccountsOverviewView(
+    state: AccountOverviewViewState,
+    onAccountSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.primary)
-            .padding(
-                WindowInsets.systemBars
-                    .only(WindowInsetsSides.Top)
-                    .asPaddingValues(),
-            )
     ) {
         AccountBalanceCardViewPager(
             accountCardViewStates = state.accountCardViewStates,
-            selectedAccountIndex = 0, // TODO index
-            onPageSelected = {}
+            selectedAccountIndex = state.selectedAccountIndex,
+            onPageSelected = onAccountSelected
         )
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        TransactionHistory(transactions = state.transactionHistory.transactions)
+        TransactionHistory(
+            modifier = Modifier.fillMaxWidth(),
+            state = state.transactionHistoryViewState
+        )
     }
 }
 
 @Composable
 fun TransactionHistory(
+    state: TransactionHistoryViewState,
+    modifier: Modifier = Modifier
+) {
+    when (state) {
+        is TransactionHistoryViewState.Loading -> {
+            TransactionHistoryListPlaceholder(modifier = modifier)
+        }
+        is TransactionHistoryViewState.Error -> {
+            Column(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = state.message)
+            }
+        }
+        is TransactionHistoryViewState.Data -> {
+            TransactionHistoryData(transactions = state.transactionHistory)
+        }
+    }
+}
+
+@Composable
+fun TransactionHistoryData(
     transactions: List<Transaction>,
     modifier: Modifier = Modifier
 ) {
@@ -76,13 +114,13 @@ fun TransactionHistory(
         var previousDate: LocalDate? = null
 
         for (transaction in transactions) {
-            if (previousDate != transaction.date) {
-                previousDate = transaction.date
+            if (previousDate != transaction.date.toLocalDate()) {
+                previousDate = transaction.date.toLocalDate()
                 item {
                     Text(
                         modifier = Modifier
                             .padding(horizontal = 20.dp, vertical = 15.dp),
-                        text = transaction.date.toString(),
+                        text = transaction.date.simpleDateFormat(),
                         style = MaterialTheme.typography.subtitle2,
                         color = ExtendedTheme.colors.textSubtitle
                     )
@@ -105,7 +143,7 @@ fun TransactionItem(transaction: Transaction) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             val icon = when (transaction.counterpartyType) {
-                CounterpartyType.Atm, CounterpartyType.Bank -> R.drawable.ic_cash_withdrawal
+                CounterpartyType.Atm, CounterpartyType.Bank, CounterpartyType.Pos -> R.drawable.ic_cash_withdrawal
                 CounterpartyType.PersonalAccount -> R.drawable.ic_user
             }
             TransactionIcon(
@@ -125,8 +163,8 @@ fun TransactionItem(transaction: Transaction) {
             )
 
             val amountText = when (transaction.transactionType) {
-                TransactionType.Deposit -> transaction.amount.format()
-                TransactionType.Withdrawal -> "-${transaction.amount.format()}"
+                TransactionType.Deposit -> "${transaction.amount.moneyFormat()} ${transaction.currency}"
+                TransactionType.Withdrawal -> "-${transaction.amount.moneyFormat()} ${transaction.currency}"
             }
             val amountColor = when (transaction.transactionType) {
                 TransactionType.Deposit -> MaterialTheme.colors.onSurface
@@ -149,6 +187,7 @@ fun TransactionItem(transaction: Transaction) {
 @Composable
 fun AccountsOverviewPreview() {
     MobileBankingTheme(darkTheme = true) {
-        AccountsOverviewView(ComposablePreviewData.accountOverviewViewState)
+        AccountsOverviewView(ComposablePreviewData.accountOverviewViewState
+            .copy(transactionHistoryViewState = TransactionHistoryViewState.Loading), {})
     }
 }

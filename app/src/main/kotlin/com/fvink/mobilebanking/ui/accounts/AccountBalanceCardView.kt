@@ -25,8 +25,7 @@ fun AccountBalanceCardView(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier
-            ,
+        modifier = modifier,
         shape = RoundedCornerShape(5.dp),
         elevation = 10.dp
     ) {
@@ -38,7 +37,7 @@ fun AccountBalanceCardView(
             Text(
                 modifier = Modifier
                     .padding(start = 30.dp, top = 20.dp),
-                text = state.balance.currency.code,
+                text = state.balance.currency,
                 style = MaterialTheme.typography.h3,
                 color = MaterialTheme.colors.onSurface
             )
@@ -70,14 +69,10 @@ fun AccountBalanceCardPreview() {
         AccountBalanceCardView(
             modifier = Modifier.height(240.dp),
             state = AccountBalanceCardViewState(
+                accountId = "0",
                 balance = ComposablePreviewData.balance,
                 balanceHistory = ComposablePreviewData.accountBalanceHistory
             )
         )
     }
 }
-
-data class AccountBalanceCardViewState(
-    val balance: Money,
-    val balanceHistory: AccountBalanceHistory
-)

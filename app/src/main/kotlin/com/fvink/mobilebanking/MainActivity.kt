@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
 import com.fvink.mobilebanking.ui.home.HomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

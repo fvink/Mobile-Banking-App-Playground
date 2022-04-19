@@ -4,7 +4,7 @@ import com.fvink.mobilebanking.ui.common.moneyFormat
 
 data class Money(
     val amount: Double,
-    val currency: Currency
+    val currency: String
 )
 
-fun Money.format() = "${amount.moneyFormat()} ${currency.code}"
+fun Money.format() = "${amount.moneyFormat()} $currency"

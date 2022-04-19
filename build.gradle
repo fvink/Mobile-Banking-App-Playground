@@ -3,7 +3,8 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.41"
     }
 }
 
@@ -11,6 +12,7 @@ plugins {
     id 'com.android.application' version '7.1.1' apply false
     id 'com.android.library' version '7.1.1' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlinVersion" apply false
+    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinVersion"
 }
 
 task clean(type: Delete) {

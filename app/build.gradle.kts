@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("plugin.serialization")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -45,18 +48,26 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
     implementation(Deps.AndroidX.appcompat)
     implementation(Deps.AndroidX.coreKtx)
     implementation(Deps.androidMaterial)
     implementation(Deps.timber)
+    implementation(Deps.serializationJson)
     implementation(Deps.Coroutines.common)
     implementation(Deps.Coroutines.android)
     implementation(Deps.AndroidX.lifecycleRuntime)
-    implementation(Deps.AndroidX.lifecycleViewModel)
+    implementation(Deps.AndroidX.lifecycleViewModelCompose)
     implementation(Deps.AndroidX.lifecycleViewModelExtensions)
     implementation(Deps.AndroidX.lifecycleProcess)
+    implementation(Deps.Dagger.hilt)
+    kapt(Deps.Dagger.hiltCompiler)
     implementation(Deps.Koin.core)
     implementation(Deps.Koin.android)
     implementation(Deps.Koin.compose)
@@ -73,6 +84,7 @@ dependencies {
     implementation(Deps.Compose.Accompanist.swipeRefresh)
     implementation(Deps.Compose.Accompanist.pager)
     implementation(Deps.Compose.Accompanist.pagerIndicators)
+    implementation(Deps.Compose.Accompanist.placeholder)
 }
 
 object Versions {
@@ -80,11 +92,14 @@ object Versions {
     const val compileSdk = 31
     const val targetSdk = 31
 
+    const val serialization = "1.3.2"
     const val coroutines = "1.6.0"
     const val androidMaterial = "1.3.0"
     const val koin = "3.1.4"
     const val landscapist = "1.4.8"
     const val timber = "5.0.1"
+    const val daggerHilt = "2.41"
+    const val shimmer = "1.0.0"
 
     object AndroidX {
         const val appcompat = "1.3.1"
@@ -103,6 +118,7 @@ object Versions {
 object Deps {
     const val androidMaterial = "com.google.android.material:material:${Versions.androidMaterial}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
 
     object AndroidX {
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appcompat}"
@@ -110,6 +126,7 @@ object Deps {
 
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.AndroidX.lifecycle}"
         const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${Versions.AndroidX.lifecycle}"
+        const val lifecycleViewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.AndroidX.lifecycle}"
         const val lifecycleViewModelExtensions = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.AndroidX.lifecycle}"
         const val lifecycleProcess = "androidx.lifecycle:lifecycle-process:${Versions.AndroidX.lifecycle}"
     }
@@ -131,6 +148,7 @@ object Deps {
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.Compose.accompanist}"
             const val pager = "com.google.accompanist:accompanist-pager:${Versions.Compose.accompanist}"
             const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:${Versions.Compose.accompanist}"
+            const val placeholder = "com.google.accompanist:accompanist-placeholder-material:${Versions.Compose.accompanist}"
         }
     }
 
@@ -144,5 +162,10 @@ object Deps {
         const val android = "io.insert-koin:koin-android:${Versions.koin}"
         const val core = "io.insert-koin:koin-core:${Versions.koin}"
         const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
+    }
+
+    object Dagger {
+        const val hilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
+        const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.daggerHilt}"
     }
 }
