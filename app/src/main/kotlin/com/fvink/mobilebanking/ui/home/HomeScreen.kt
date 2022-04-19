@@ -1,12 +1,7 @@
 package com.fvink.mobilebanking.ui.home
 
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
@@ -28,12 +23,6 @@ import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
 @Composable
 fun HomeScreen() {
     Scaffold(
-        modifier = Modifier
-            .padding(
-                WindowInsets.systemBars
-                    .only(WindowInsetsSides.Top)
-                    .asPaddingValues(),
-            ),
         bottomBar = {
             BottomAppBar(
                 modifier = Modifier

@@ -64,6 +64,11 @@ fun AccountsOverviewView(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.primary)
+            .padding(
+                WindowInsets.systemBars
+                    .only(WindowInsetsSides.Top)
+                    .asPaddingValues(),
+            )
     ) {
         AccountBalanceCardViewPager(
             accountCardViewStates = state.accountCardViewStates,
