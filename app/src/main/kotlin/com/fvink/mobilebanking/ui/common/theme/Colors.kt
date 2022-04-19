@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 object ColorPalette {
     val Secondary = Color(0xFF6384FF)
     val ErrorRed = Color(0xFFFF2920)
+    val ButtonRed = Color(0xFFF5586D)
 
     val PrimaryLight = Color(0xFFFEFEFE)
     val SurfaceLight = Color(0xFFFFFFFF)
@@ -37,6 +38,7 @@ data class Colors(
     val transactionIconBackground: Color,
     val pagerIndicatorSelected: Color,
     val pagerIndicatorUnselected: Color,
+    val buttonRed: Color
 )
 
 val lightColors = with(ColorPalette) {
@@ -50,7 +52,8 @@ val lightColors = with(ColorPalette) {
         divider = DividerLight,
         transactionIconBackground = TransactionIconBackgroundLight,
         pagerIndicatorSelected = PagerIndicatorSelectedLight,
-        pagerIndicatorUnselected = PagerIndicatorUnselectedLight
+        pagerIndicatorUnselected = PagerIndicatorUnselectedLight,
+        buttonRed = ButtonRed
     )
 }
 
@@ -65,7 +68,8 @@ val darkColors = with(ColorPalette) {
         divider = DividerDark,
         transactionIconBackground = TransactionIconBackgroundDark,
         pagerIndicatorSelected = PagerIndicatorSelectedDark,
-        pagerIndicatorUnselected = PagerIndicatorUnselectedDark
+        pagerIndicatorUnselected = PagerIndicatorUnselectedDark,
+        buttonRed = ButtonRed
     )
 }
 

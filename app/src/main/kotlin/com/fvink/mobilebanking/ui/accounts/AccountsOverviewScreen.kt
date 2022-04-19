@@ -37,8 +37,8 @@ import com.fvink.mobilebanking.ui.common.composables.TransactionIcon
 import com.fvink.mobilebanking.ui.common.moneyFormat
 import com.fvink.mobilebanking.ui.common.theme.ExtendedTheme
 import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
-import com.fvink.mobilebanking.ui.common.theme.simpleDateFormat
-import timber.log.Timber
+import com.fvink.mobilebanking.ui.common.theme.simpleDayMonthFormat
+import com.fvink.mobilebanking.ui.common.viewstates.TransactionHistoryViewState
 import java.time.LocalDate
 
 @Composable
@@ -86,7 +86,7 @@ fun AccountsOverviewView(
 }
 
 @Composable
-fun TransactionHistory(
+private fun TransactionHistory(
     state: TransactionHistoryViewState,
     modifier: Modifier = Modifier
 ) {
@@ -109,7 +109,7 @@ fun TransactionHistory(
 }
 
 @Composable
-fun TransactionHistoryData(
+private fun TransactionHistoryData(
     transactions: List<Transaction>,
     modifier: Modifier = Modifier
 ) {
@@ -125,7 +125,7 @@ fun TransactionHistoryData(
                     Text(
                         modifier = Modifier
                             .padding(horizontal = 20.dp, vertical = 15.dp),
-                        text = transaction.date.simpleDateFormat(),
+                        text = transaction.date.simpleDayMonthFormat(),
                         style = MaterialTheme.typography.subtitle2,
                         color = ExtendedTheme.colors.textSubtitle
                     )

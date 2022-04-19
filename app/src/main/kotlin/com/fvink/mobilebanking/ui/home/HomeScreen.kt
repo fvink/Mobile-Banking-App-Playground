@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fvink.mobilebanking.ui.accounts.AccountsOverviewScreen
+import com.fvink.mobilebanking.ui.cards.CardsScreen
 import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
 
 @Composable
@@ -47,7 +48,7 @@ fun HomeScreen() {
             }
         }
     ) {
-        AccountsOverviewScreen(
+        CardsScreen(
             modifier = Modifier.padding(it)
         )
     }

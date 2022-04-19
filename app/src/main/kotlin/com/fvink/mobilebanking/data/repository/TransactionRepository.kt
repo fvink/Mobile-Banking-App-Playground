@@ -13,9 +13,16 @@ import javax.inject.Inject
 class TransactionRepository @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) {
-    suspend fun getTransactions(accountId: String): Result<List<Transaction>> {
+    suspend fun getAccountTransactions(accountId: String): Result<List<Transaction>> {
         return withContext(dispatchers.io) {
             delay(1200)
+            safeExecute { Json.decodeFromString(transactionsMockResponse) }
+        }
+    }
+
+    suspend fun getCardTransactions(cardNumber: String): Result<List<Transaction>> {
+        return withContext(dispatchers.io) {
+            delay(500)
             safeExecute { Json.decodeFromString(transactionsMockResponse) }
         }
     }

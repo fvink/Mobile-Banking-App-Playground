@@ -26,9 +26,11 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
+        val darkTheme = false
+
         setContent {
             val systemUiController = rememberSystemUiController()
-            val useDarkIcons = ExtendedTheme.darkTheme
+            val useDarkIcons = !darkTheme
 
             SideEffect {
                 systemUiController.setStatusBarColor(
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     darkIcons = useDarkIcons
                 )
             }
-            MobileBankingTheme(darkTheme = false) {
+            MobileBankingTheme(darkTheme = darkTheme) {
                 HomeScreen()
             }
         }

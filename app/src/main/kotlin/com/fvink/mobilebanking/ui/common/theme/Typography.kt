@@ -45,9 +45,16 @@ val MobileBankingTypography = Typography(
     ),
 )
 
-val Typography.creditCardText: TextStyle
+val Typography.creditCardTitle: TextStyle
     get() = TextStyle(
         fontFamily = KreditBack,
-        fontSize = 8.sp,
+        fontSize = 16.sp,
         letterSpacing = 2.47.sp
+    )
+
+val Typography.creditCardSubtitle: TextStyle
+    get() = TextStyle(
+        fontFamily = Gilroy,
+        fontSize = 9.sp,
+        letterSpacing = (-0.04).sp
     )

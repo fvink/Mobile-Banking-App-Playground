@@ -6,6 +6,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +33,8 @@ fun BottomNavigationBar() {
         contentColor = ExtendedTheme.colors.textSubtitle,
         elevation = 0.dp
     ) {
+        var selectedItem by remember { mutableStateOf<NavigationItem>(NavigationItem.Accounts) }
+
         items.forEach { item ->
             if (item is NavigationItem.Empty) {
                 // Empty item adds space to fit the floating action button
@@ -51,8 +57,8 @@ fun BottomNavigationBar() {
                     selectedContentColor = MaterialTheme.colors.secondary,
                     unselectedContentColor = ExtendedTheme.colors.textSubtitle,
                     alwaysShowLabel = true,
-                    selected = false,
-                    onClick = {}
+                    selected = item == selectedItem,
+                    onClick = { selectedItem = item }
                 )
             }
         }

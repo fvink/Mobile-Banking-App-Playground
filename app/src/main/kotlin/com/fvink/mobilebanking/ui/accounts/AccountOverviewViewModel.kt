@@ -3,10 +3,10 @@ package com.fvink.mobilebanking.ui.accounts
 import com.fvink.mobilebanking.data.repository.AccountRepository
 import com.fvink.mobilebanking.data.repository.TransactionRepository
 import com.fvink.mobilebanking.domain.Money
-import com.fvink.mobilebanking.domain.Transaction
 import com.fvink.mobilebanking.ui.base.BaseViewModel
 import com.fvink.mobilebanking.ui.base.ViewEvent
 import com.fvink.mobilebanking.ui.base.ViewState
+import com.fvink.mobilebanking.ui.common.viewstates.TransactionHistoryViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -23,7 +23,7 @@ class AccountOverviewViewModel @Inject constructor(
                 hideLoading()
 
                 val selectedAccount = accounts.getOrNull(0) ?: return@onSuccess
-                val transactionHistory = transactionRepository.getTransactions(selectedAccount.id).getOrNull()
+                val transactionHistory = transactionRepository.getAccountTransactions(selectedAccount.id).getOrNull()
 
                 val accountCardViewStates = accounts.map { account ->
                     val accountBalanceHistory = accountRepository
@@ -55,7 +55,7 @@ class AccountOverviewViewModel @Inject constructor(
             }
 
             val accountId = getAccountIdByIndex(index) ?: return@launch
-            transactionRepository.getTransactions(accountId)
+            transactionRepository.getAccountTransactions(accountId)
                 .onSuccess { transactions ->
                     updateState {
                         it.copy(transactionHistoryViewState = TransactionHistoryViewState.Data(transactions))
@@ -78,12 +78,6 @@ data class AccountBalanceCardViewState(
     val balance: Money,
     val balanceHistory: AccountBalanceHistory
 )
-
-sealed class TransactionHistoryViewState {
-    object Loading : TransactionHistoryViewState()
-    class Data(val transactionHistory: List<Transaction>) : TransactionHistoryViewState()
-    class Error(val message: String) : TransactionHistoryViewState()
-}
 
 data class AccountOverviewViewState(
     val accountCardViewStates: List<AccountBalanceCardViewState> = emptyList(),

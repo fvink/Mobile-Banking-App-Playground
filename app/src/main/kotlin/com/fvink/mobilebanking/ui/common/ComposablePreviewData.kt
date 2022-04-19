@@ -7,12 +7,13 @@ import com.fvink.mobilebanking.domain.Currencies
 import com.fvink.mobilebanking.domain.Money
 import com.fvink.mobilebanking.domain.Person
 import com.fvink.mobilebanking.domain.Transaction
-import com.fvink.mobilebanking.domain.TransactionHistory
 import com.fvink.mobilebanking.domain.TransactionType
 import com.fvink.mobilebanking.ui.accounts.AccountBalanceCardViewState
 import com.fvink.mobilebanking.ui.accounts.AccountBalanceHistory
 import com.fvink.mobilebanking.ui.accounts.AccountOverviewViewState
-import com.fvink.mobilebanking.ui.accounts.TransactionHistoryViewState
+import com.fvink.mobilebanking.ui.cards.CardViewState
+import com.fvink.mobilebanking.ui.cards.CardsViewState
+import com.fvink.mobilebanking.ui.common.viewstates.TransactionHistoryViewState
 import java.time.LocalDateTime
 
 object ComposablePreviewData {
@@ -91,6 +92,24 @@ object ComposablePreviewData {
 
     val accountOverviewViewState = AccountOverviewViewState(
         accountCardViewStates = accountBalanceCardViewStateList,
+        transactionHistoryViewState = TransactionHistoryViewState.Data(transactionHistory)
+    )
+
+    val cardViewStateList = listOf(
+        CardViewState(
+            number = "1234 5678 9876 5432",
+            expirationDate = "01/23",
+            "457"
+        ),
+        CardViewState(
+            number = "1234 5678 9876 5432",
+            expirationDate = "12/22",
+            "346"
+        )
+    )
+
+    val cardsViewState = CardsViewState(
+        cardViewStates = cardViewStateList,
         transactionHistoryViewState = TransactionHistoryViewState.Data(transactionHistory)
     )
 }
