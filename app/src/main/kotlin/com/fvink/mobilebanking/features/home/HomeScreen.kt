@@ -1,5 +1,6 @@
 package com.fvink.mobilebanking.features.home
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -17,11 +18,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.fvink.mobilebanking.core.AppNavigation
 import com.fvink.mobilebanking.features.cards.CardsScreen
 import com.fvink.mobilebanking.features.common.theme.MobileBankingTheme
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HomeScreen() {
+    val navController = rememberAnimatedNavController()
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -31,7 +37,7 @@ fun HomeScreen() {
                 cutoutShape = CircleShape,
                 elevation = 22.dp
             ) {
-                BottomNavigationBar()
+                BottomNavigationBar(navController = navController)
             }
         },
         floatingActionButtonPosition = FabPosition.Center,
@@ -47,7 +53,8 @@ fun HomeScreen() {
             }
         }
     ) {
-        CardsScreen(
+        AppNavigation(
+            navController = navController,
             modifier = Modifier.padding(it)
         )
     }

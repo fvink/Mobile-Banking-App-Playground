@@ -67,6 +67,7 @@ dependencies {
     implementation(Deps.AndroidX.lifecycleViewModelExtensions)
     implementation(Deps.AndroidX.lifecycleProcess)
     implementation(Deps.Dagger.hilt)
+    implementation(Deps.Dagger.hiltNavigationCompose)
     kapt(Deps.Dagger.hiltCompiler)
     implementation(Deps.Koin.core)
     implementation(Deps.Koin.android)
@@ -99,6 +100,7 @@ object Versions {
     const val landscapist = "1.4.8"
     const val timber = "5.0.1"
     const val daggerHilt = "2.41"
+    const val hiltNavigationCompose = "1.0.0"
     const val shimmer = "1.0.0"
 
     object AndroidX {
@@ -167,5 +169,6 @@ object Deps {
     object Dagger {
         const val hilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.daggerHilt}"
+        const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     }
 }

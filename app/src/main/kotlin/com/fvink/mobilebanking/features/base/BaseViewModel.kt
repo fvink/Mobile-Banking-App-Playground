@@ -4,6 +4,7 @@ package com.fvink.mobilebanking.features.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -59,7 +60,7 @@ abstract class BaseViewModel<State : ViewState, Event : ViewEvent>(initialState:
     /**
      * Launches a coroutine using the viewModelScope
      */
-    protected fun launch(coroutine: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(block = coroutine)
+    protected fun launch(coroutine: suspend CoroutineScope.() -> Unit): Job {
+        return viewModelScope.launch(block = coroutine)
     }
 }

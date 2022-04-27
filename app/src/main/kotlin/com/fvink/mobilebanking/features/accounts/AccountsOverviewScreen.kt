@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fvink.mobilebanking.R
 import com.fvink.mobilebanking.domain.CounterpartyType
 import com.fvink.mobilebanking.domain.Transaction
@@ -44,7 +44,7 @@ import java.time.LocalDate
 @Composable
 fun AccountsOverviewScreen(
     modifier: Modifier = Modifier,
-    viewModel: AccountOverviewViewModel = viewModel()
+    viewModel: AccountOverviewViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     AccountsOverviewView(

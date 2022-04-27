@@ -50,7 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fvink.mobilebanking.R
 import com.fvink.mobilebanking.domain.Transaction
 import com.fvink.mobilebanking.features.accounts.TransactionHistoryListPlaceholder
@@ -66,7 +66,7 @@ import java.time.LocalDate
 @Composable
 fun CardsScreen(
     modifier: Modifier = Modifier,
-    viewModel: CardsViewModel = viewModel()
+    viewModel: CardsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     CardsView(

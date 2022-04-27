@@ -1,4 +1,4 @@
-package com.fvink.mobilebanking
+package com.fvink.mobilebanking.core
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        val darkTheme = true
+        val darkTheme = false
 
         setContent {
             val systemUiController = rememberSystemUiController()
