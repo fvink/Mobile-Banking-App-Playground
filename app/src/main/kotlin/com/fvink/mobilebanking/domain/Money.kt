@@ -1,6 +1,6 @@
 package com.fvink.mobilebanking.domain
 
-import com.fvink.mobilebanking.ui.common.moneyFormat
+import com.fvink.mobilebanking.features.common.moneyFormat
 
 data class Money(
     val amount: Double,

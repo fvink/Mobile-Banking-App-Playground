@@ -2,7 +2,7 @@ package com.fvink.mobilebanking.data.repository
 
 import com.fvink.mobilebanking.data.mock.accountsMockResponse
 import com.fvink.mobilebanking.domain.Account
-import com.fvink.mobilebanking.ui.accounts.AccountBalanceHistory
+import com.fvink.mobilebanking.features.accounts.AccountBalanceHistory
 import com.fvink.mobilebanking.util.DispatcherProvider
 import com.fvink.mobilebanking.util.safeExecute
 import kotlinx.coroutines.withContext

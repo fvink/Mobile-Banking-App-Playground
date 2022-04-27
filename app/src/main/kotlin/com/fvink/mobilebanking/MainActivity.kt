@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import com.fvink.mobilebanking.ui.common.theme.ExtendedTheme
-import com.fvink.mobilebanking.ui.common.theme.MobileBankingTheme
-import com.fvink.mobilebanking.ui.home.HomeScreen
+import com.fvink.mobilebanking.features.common.theme.MobileBankingTheme
+import com.fvink.mobilebanking.features.home.HomeScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        val darkTheme = false
+        val darkTheme = true
 
         setContent {
             val systemUiController = rememberSystemUiController()
